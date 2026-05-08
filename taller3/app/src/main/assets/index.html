@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <style>
+        body{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            margin:0;
+            font-size:30px;
+            font-family:Arial;
+        }
+    </style>
+</head>
+
+<body id="body">
+
+<div id="text">Texto</div>
+
+<script>
+
+    function updateUI(text, textColor, bgColor){
+
+        document.getElementById("text").innerHTML = text;
+
+        document.getElementById("text").style.color = textColor;
+
+        document.getElementById("body").style.backgroundColor = bgColor;
+    }
+
+</script>
+
+</body>
+</html>
