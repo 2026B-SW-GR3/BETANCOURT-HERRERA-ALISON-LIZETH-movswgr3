@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">Examen_PersistenciaDual</string>
+    <string name="app_name">Examen Persistencia Dual</string>
+    <string name="title_main">Persistencia Dual</string>
+    <string name="mode_sql">Modo SQL (Room)</string>
+    <string name="mode_nosql">Modo NoSQL (Copia Inmutable)</string>
+    <string name="label_producto">Nombre del producto</string>
+    <string name="btn_guardar_sql">Guardar en SQL</string>
+    <string name="btn_guardar_nosql">Guardar en NoSQL</string>
+    <string name="tag_sql">SQL</string>
+    <string name="tag_nosql">NoSQL</string>
+    <string name="fecha_placeholder">Fecha: %s</string>
 </resources>

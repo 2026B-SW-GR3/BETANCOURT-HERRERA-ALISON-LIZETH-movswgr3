@@ -1,18 +1,20 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
-    namespace = "com.example.examen_persistenciadual"
-    compileSdk = 35
+    namespace = "com.example.modulosredalmacenamiento"
+    compileSdk {
+        version = release(36) {
+            minorApiLevel = 1
+        }
+    }
 
     defaultConfig {
-        applicationId = "com.example.examen_persistenciadual"
+        applicationId = "com.example.modulosredalmacenamiento"
         minSdk = 28
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -29,20 +31,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
-
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
     buildFeatures {
         compose = true
-    }
-
-    testOptions {
-        unitTests.isReturnDefaultValues = true
     }
 }
 
@@ -55,7 +48,6 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-    
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -63,10 +55,16 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    // --- MÓDULO 1: COMUNICACIÓN DE RED ---
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
-    
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    kapt(libs.androidx.room.compiler)
+    // --- MÓDULO 3: ALMACENAMIENTO NATIVO ---
+    // DataStore (Reemplazo moderno de SharedPreferences)
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    // EncryptedSharedPreferences (Criptografía nativa de AndroidX)
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+
+    // Opcional: ViewModel y LiveData para Compose (si no están por defecto)
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
 }
