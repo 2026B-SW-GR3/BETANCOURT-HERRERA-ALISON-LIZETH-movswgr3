@@ -21,18 +21,30 @@ fun SeguridadScreen(viewModel: SeguridadViewModel = viewModel()) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        // Mostrar error si existe
+        viewModel.errorMessage?.let { error ->
+            Text(
+                text = error,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
         OutlinedTextField(
             value = viewModel.llave,
             onValueChange = { viewModel.llave = it },
             label = { Text("Llave") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            enabled = !viewModel.isLoading
         )
 
         OutlinedTextField(
             value = viewModel.valor,
             onValueChange = { viewModel.valor = it },
             label = { Text("Valor") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            enabled = !viewModel.isLoading
         )
 
         Text("Mecanismo de Persistencia:", style = MaterialTheme.typography.titleMedium)
@@ -45,7 +57,7 @@ fun SeguridadScreen(viewModel: SeguridadViewModel = viewModel()) {
                         .height(48.dp)
                         .selectable(
                             selected = (mecanismo == viewModel.mecanismoSeleccionado),
-                            onClick = { viewModel.mecanismoSeleccionado = mecanismo },
+                            onClick = { if (!viewModel.isLoading) viewModel.mecanismoSeleccionado = mecanismo },
                             role = Role.RadioButton
                         )
                         .padding(horizontal = 16.dp),
@@ -53,12 +65,14 @@ fun SeguridadScreen(viewModel: SeguridadViewModel = viewModel()) {
                 ) {
                     RadioButton(
                         selected = (mecanismo == viewModel.mecanismoSeleccionado),
-                        onClick = null 
+                        onClick = null,
+                        enabled = !viewModel.isLoading
                     )
                     Text(
                         text = mecanismo.name,
                         style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.padding(start = 16.dp)
+                        modifier = Modifier.padding(start = 16.dp),
+                        color = if (viewModel.isLoading) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface
                     )
                 }
             }
@@ -70,15 +84,21 @@ fun SeguridadScreen(viewModel: SeguridadViewModel = viewModel()) {
         ) {
             Button(
                 onClick = { viewModel.guardar() },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                enabled = !viewModel.isLoading
             ) {
                 Text("Guardar")
             }
             Button(
                 onClick = { viewModel.recuperar() },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                enabled = !viewModel.isLoading
             ) {
-                Text("Recuperar")
+                if (viewModel.isLoading) {
+                    CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
+                } else {
+                    Text("Recuperar")
+                }
             }
         }
 

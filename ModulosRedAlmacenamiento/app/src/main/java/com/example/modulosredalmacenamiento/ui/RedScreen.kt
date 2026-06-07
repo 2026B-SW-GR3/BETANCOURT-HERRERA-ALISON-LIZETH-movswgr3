@@ -31,6 +31,16 @@ fun RedScreen(viewModel: RedViewModel = viewModel()) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        // Mostrar error si existe
+        viewModel.errorMessage?.let { error ->
+            Text(
+                text = error,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
         // Sección GET
         Row(
             modifier = Modifier.fillMaxWidth(),

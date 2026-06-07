@@ -16,17 +16,12 @@ import kotlinx.coroutines.withContext
 enum class TipoMecanismo {
     SHARED_PREFS, DATASTORE, ENCRYPTED
 }
-
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "my_datastore")
-
 class StorageManager(private val context: Context) {
-
     private val sharedPrefs = context.getSharedPreferences("shared_prefs", Context.MODE_PRIVATE)
-
     private val masterKey = MasterKey.Builder(context)
         .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
         .build()
-
     private val encryptedPrefs = EncryptedSharedPreferences.create(
         context,
         "encrypted_prefs",
@@ -34,7 +29,6 @@ class StorageManager(private val context: Context) {
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
-
     suspend fun guardarDato(llave: String, valor: String, mecanismo: TipoMecanismo) {
         withContext(Dispatchers.IO) {
             when (mecanismo) {

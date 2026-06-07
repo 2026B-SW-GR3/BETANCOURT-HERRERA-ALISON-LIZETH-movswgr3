@@ -17,18 +17,23 @@ class RedViewModel : ViewModel() {
     var bodyInput by mutableStateOf("")
     var isLoading by mutableStateOf(false)
     var updateSuccess by mutableStateOf(false)
+    var errorMessage by mutableStateOf<String?>(null)
 
     fun getPost() {
-        val id = idInput.toIntOrNull() ?: return
+        val id = idInput.toIntOrNull() ?: run {
+            errorMessage = "Por favor ingresa un ID válido"
+            return
+        }
         viewModelScope.launch {
             isLoading = true
+            errorMessage = null
             try {
                 val result = RetrofitClient.apiService.getPost(id)
                 post = result
                 titleInput = result.title
                 bodyInput = result.body
             } catch (e: Exception) {
-                // Manejar error
+                errorMessage = "Error al obtener el post: ${e.message}"
             } finally {
                 isLoading = false
             }
@@ -39,13 +44,14 @@ class RedViewModel : ViewModel() {
         val currentPost = post ?: return
         viewModelScope.launch {
             isLoading = true
+            errorMessage = null
             try {
                 val updatedPost = currentPost.copy(title = titleInput, body = bodyInput)
                 val result = RetrofitClient.apiService.updatePost(updatedPost.id, updatedPost)
                 post = result
                 updateSuccess = true
             } catch (e: Exception) {
-                // Manejar error
+                errorMessage = "Error al actualizar: ${e.message}"
             } finally {
                 isLoading = false
             }

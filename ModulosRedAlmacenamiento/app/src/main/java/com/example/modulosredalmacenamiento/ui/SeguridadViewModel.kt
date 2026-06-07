@@ -18,18 +18,50 @@ class SeguridadViewModel(application: Application) : AndroidViewModel(applicatio
     var mecanismoSeleccionado by mutableStateOf(TipoMecanismo.SHARED_PREFS)
     var resultadoBusqueda by mutableStateOf<String?>(null)
     var busquedaRealizada by mutableStateOf(false)
+    var isLoading by mutableStateOf(false)
+    var operacionExitosa by mutableStateOf(false)
+    var errorMessage by mutableStateOf<String?>(null)
 
     fun guardar() {
+        if (llave.isBlank()) {
+            errorMessage = "La llave no puede estar vacía"
+            return
+        }
         viewModelScope.launch {
-            storageManager.guardarDato(llave, valor, mecanismoSeleccionado)
+            isLoading = true
+            errorMessage = null
+            try {
+                storageManager.guardarDato(llave, valor, mecanismoSeleccionado)
+                operacionExitosa = true
+            } catch (e: Exception) {
+                errorMessage = "Error al guardar: ${e.message}"
+            } finally {
+                isLoading = false
+            }
         }
     }
 
     fun recuperar() {
-        viewModelScope.launch {
-            val resultado = storageManager.obtenerDato(llave, mecanismoSeleccionado)
-            resultadoBusqueda = resultado
-            busquedaRealizada = true
+        if (llave.isBlank()) {
+            errorMessage = "La llave no puede estar vacía"
+            return
         }
+        viewModelScope.launch {
+            isLoading = true
+            errorMessage = null
+            try {
+                val resultado = storageManager.obtenerDato(llave, mecanismoSeleccionado)
+                resultadoBusqueda = resultado
+                busquedaRealizada = true
+            } catch (e: Exception) {
+                errorMessage = "Error al recuperar: ${e.message}"
+            } finally {
+                isLoading = false
+            }
+        }
+    }
+
+    fun resetSuccess() {
+        operacionExitosa = false
     }
 }
