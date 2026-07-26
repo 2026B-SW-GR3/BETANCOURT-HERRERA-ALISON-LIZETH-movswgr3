@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E4002B">
+
+    <!-- Top Bar Solid Red -->
+    <LinearLayout
+        android:id="@+id/llTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:background="#E4002B"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Address Text -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EC - Casa ▼"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Mock KFC bucket logo centered -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="Logotipo KFC">
+            
+            <View android:layout_width="12dp" android:layout_height="40dp" android:background="@color/white" android:layout_marginEnd="4dp"/>
+            <View android:layout_width="12dp" android:layout_height="40dp" android:background="@color/white" android:layout_marginEnd="4dp"/>
+            <View android:layout_width="12dp" android:layout_height="40dp" android:background="@color/white" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Ayuda Button -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/badge_bg"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp"
+            android:backgroundTint="#60000000"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="Botón de ayuda">
+            
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_headset"
+                app:tint="@color/white"
+                android:layout_marginEnd="4dp"
+                android:importantForAccessibility="no" />
+                
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ayuda"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Background Image (Campaign) -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:src="@drawable/kfc_campaign"
+        android:contentDescription="Banner promocional Nuevos Aros de cebolla"
+        app:layout_constraintTop_toBottomOf="@id/llTopBar"
+        app:layout_constraintBottom_toTopOf="@id/bottomSheet" />
+
+    <!-- Bottom Sheet Area (White Card Overlay) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_home_bottom"
+        android:paddingTop="32dp"
+        android:paddingBottom="24dp"
+        android:paddingHorizontal="24dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Cupones Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCupones"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="CUPONES"
+            android:textColor="#E4002B"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:icon="@drawable/ic_percent"
+            app:iconTint="#E4002B"
+            app:iconGravity="textStart"
+            app:strokeColor="#757575"
+            app:strokeWidth="1dp"
+            app:cornerRadius="30dp"
+            app:backgroundTint="@color/white"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- A Domicilio Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDomicilio"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:text="A DOMICILIO"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:icon="@drawable/ic_kfc_domicilio"
+            app:iconGravity="textTop"
+            app:iconSize="36dp"
+            app:iconPadding="4dp"
+            app:iconTint="@null"
+            app:cornerRadius="16dp"
+            app:backgroundTint="#E4002B"
+            app:layout_constraintTop_toBottomOf="@id/btnCupones"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnRecoge" />
+
+        <!-- Recoge en Local Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRecoge"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="8dp"
+            android:text="RECOGE EN EL LOCAL"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:icon="@drawable/ic_kfc_express"
+            app:iconGravity="textTop"
+            app:iconSize="36dp"
+            app:iconPadding="4dp"
+            app:iconTint="@null"
+            app:cornerRadius="16dp"
+            app:backgroundTint="#E4002B"
+            app:layout_constraintTop_toBottomOf="@id/btnCupones"
+            app:layout_constraintStart_toEndOf="@id/btnDomicilio"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
